@@ -1,0 +1,126 @@
+*{ 
+    padding: 0; 
+    margin: 0; 
+    border: 0; 
+   } 
+   *, *:before, *:after{ 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box; 
+   } 
+   :focus, :active{outline: none;} 
+   a:focus, a:active{outline: none;} 
+    
+   nav,footer,header,aside{display: block;} 
+    
+   html, body{ 
+    height: 100%; 
+    width: 100%; 
+    font-style: 100%; 
+    line-height: 1; 
+    font-style: 14px; 
+    -ms-text-size-adjust: 100%; 
+    -moz-text-size-adjust: 100%; 
+    -webkit-text-size-adjust: 100%; 
+   } 
+    
+   input, button, textarea{font-family: inherit;} 
+    
+   input::-ms-clear{display:none;} 
+   button{cursor: pointer;} 
+   button::-moz-focus-inner{padding: 0;border: 0;} 
+   a, a:visited{text-decoration: none;} 
+   a:hover{text-decoration: none;} 
+   ul li{list-style-type: none;} 
+   img{vertical-align: top;} 
+    
+   h1,h2, h3, h4, h5, h6{font-style: inherit; font-weight: 400;}
+body {
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth; /* Плавный скролл */
+}
+
+/* Навигация */
+.navbar {
+    position: fixed;
+    width: 100%;
+    background: #333;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Стили для блоков */
+.content1 {
+    height: 100vh; /* Полный экран */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.content2 {
+    height: 100vh; /* Полный экран */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.content3 {
+    height: 100vh; /* Полный экран */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 30px;
+    background-color: azure;
+}
+#block1 { background: #FF5733; } /* Красный */
+#block2 { background: #33A8FF; } /* Синий */
+
+
+
+
+.map-container {
+    width: 900px;  /* Задай нужную ширину */
+    height: 700px; /* Задай нужную высоту */
+    border-radius: 15px; 
+    overflow: hidden; 
+}
+
+
+.contact-info{
+    background-color: rgb(110, 140, 150);
+    color:white;
+    padding: 15px;
+    line-height: 1.5;
+    border-radius: 15px;
+}
+.city{
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 3px solid white;
+}
+
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Отступ между иконкой и текстом */
+    margin-bottom: 10px;
+}
+
+.contact-item img {
+    width: 24px; /* Размер иконок */
+    height: 24px;
+}
+
+
+
+
