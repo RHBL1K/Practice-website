@@ -13,6 +13,7 @@
             <a href="#block1">Кто мы?</a>
             <a href="#block2">Товары</a>
             <a href="#block3">Расположение</a>
+            <a href="#block4">Contact us</a>
         </header>
 
 
@@ -81,8 +82,7 @@
         </div>
     </div>
 
-    <!-- Добавление кнопки в карточки товаров -->
-    
+
 
 
 
@@ -125,6 +125,31 @@
 
 
 
+
+
+
+
+
+        <div id="block4" class="content4">
+            <div class="contact-us">
+                <h1>Свяжитесь с нами</h1>
+                <br>
+                <p>Если у вас есть вопросы или предложения, заполните форму ниже.</p>
+                <br>
+                <form action="http://localhost:8080/submit" method="post" class="contact-form">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="phone">Ваш номер телефона:</label>
+                    <input type="tel" id="phone" name="phone" pattern="\+7[0-9]{10}" placeholder="+7XXXXXXXXXX" required>
+                    
+                    <label for="message">Сообщение:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                    
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </div>
 
         <script src="script.js"></script>
 

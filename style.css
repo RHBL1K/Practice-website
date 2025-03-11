@@ -77,6 +77,8 @@ body {
 .content2 {
     height: 105vh; /* Полный экран */
     background-color: azure;
+    display: grid;
+    
 }
 .content3 {
     height: 100vh; /* Полный экран */
@@ -106,12 +108,16 @@ body {
 
 
 
-.content1, .content2, .content3 {
-    border: 1px solid red; /* Временно! */
+/* .content1, .content2, .content3 {
+    border: 1px solid red;
+} */
+
+
+
+.content4 {
+    display: flex;
+
 }
-
-
-
 
 
 /* 
@@ -306,3 +312,49 @@ animation */
 
 
 
+
+
+.content4{
+    background-color: azure;
+    height: 60vh;
+}
+.contact-us {
+    background-color: rgb(110, 140, 150);
+    padding: 30px;
+    border-radius: 10px;
+    width: 50%;
+    margin: 50px auto;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+.contact-us h1{
+    font-size: 30px;
+    font-weight: bold;
+}
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.contact-form label {
+    font-weight: bold;
+}
+.contact-form input, .contact-form textarea {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+.contact-form button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.contact-form button:hover {
+    background-color: #555;
+}

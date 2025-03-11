@@ -94,3 +94,37 @@ document.addEventListener("DOMContentLoaded", function() {
 function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector(".contact-form");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+        const formData = new FormData(form);
+
+        fetch("http://localhost:8080/submit", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert("Сообщение успешно отправлено!");
+            form.reset(); // Очистить форму после успешной отправки
+        })
+        .catch(error => {
+            alert("Ошибка при отправке сообщения!");
+            console.error("Ошибка:", error);
+        });
+    });
+});
