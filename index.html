@@ -1,28 +1,88 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Якорная навигация на div</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Якорная навигация на div</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
 
 
-    <header class="navbar">
-        <a href="#block1">Кто мы?</a>
-        <a href="#block2">Товары</a>
-        <a href="#block3">Расположение</a>
-    </header>
+        <header class="navbar">
+            <a href="#block1">Кто мы?</a>
+            <a href="#block2">Товары</a>
+            <a href="#block3">Расположение</a>
+        </header>
 
 
-    <div id="block1" class="content1">
-        <div class="title_container">
-            <h1 class = "title">ТОО "Акжол Курылыс"</h1>
-            <h4 class = title_info>Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия</h4>
+        <div id="block1" class="content1">
+            <div class="title_container">
+                <h1 class = "title">ТОО "Акжол Курылыс"</h1>
+                <h4 class = title_info>ТОО «Акжол Курылыс KZ» – эксперт в сфере представительских поставок премиальных строительных красок и материалов бренда Grand Victory (краска, грунтовка и др.), обеспечивая профессиональные решения для надежной и долговечной отделки. С 2016 года мы способствуем развитию строительной отрасли, предлагая высококачественные продукты, оптимальные решения для клиентов и участвуя в государственных закупках, создавая прочную основу для партнерства и роста.</h4>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="block2" class="content2">
+
+            <div class="imgs-container">
+                <div class="card card1">
+                    <img src="/imgs/red one.jpg" alt="" class = "img-card" >
+                    <h1>Ultra Emulsion</h1>
+
+                </div>
+                
+                <div class="card card2">
+                    <img src="/imgs/yellow one.jpg" alt="" class = "img-card">
+                    <h1>Ultra Color</h1>
+                </div>
+                <div class="card card3">
+                    <img src="/imgs/green one.jpg" alt="" class = "img-card">
+                    <h1>Ultra Plus</h1>
+                </div>
+                <div class="card card4">
+                    <img src="/imgs/lak.jpg" alt="" class = "img-card">
+                    <h1>ПФ 170</h1>
+                </div>
+                <div class="card card5">
+                    <img src="/imgs/grunt.jpg" alt="" class = "img-card">
+                    <h1>Floor</h1>
+                </div>
+                <div class="card card6">
+                    <img src="/imgs/bezgrunt.jpg" alt="" class = "img-card">
+                    <h1>Бетонконтакт</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Добавление модального окна -->
+    <div id="popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Информация о товаре</h2>
+            <div id="popup-body">
+                <p>Здесь будет описание товара.</p>
+            </div>
         </div>
     </div>
-    <div id="block2" class="content2">Блок 2</div>
+
+    <!-- Добавление кнопки в карточки товаров -->
+    
 
 
 
@@ -30,36 +90,49 @@
 
 
 
-    <div id="block3" class="content3">
-        <div class="map-container">
-            <script type="text/javascript" charset="utf-8" async 
-                src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adcd3e93a1c1b64e63931299a6614fe58071f5d34d9af77921609d7f5265379b9&amp;width=100%&amp;height=100%&amp;lang=ru_RU&amp;scroll=true">
-            </script>
+
+
+        <div id="block3" class="content3">
+            <div class="map-container">
+                <script type="text/javascript" charset="utf-8" async 
+                    src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Adcd3e93a1c1b64e63931299a6614fe58071f5d34d9af77921609d7f5265379b9&amp;width=100%&amp;height=100%&amp;lang=ru_RU&amp;scroll=true">
+                </script>
+            </div>
+        
+            <div class="contact-info">
+                <h3 class="city">Караганда</h3>
+        
+                <div class="contact-item">
+                    <img src="imgs/gps-svgrepo-com.svg" alt="Адрес">
+                    <p>Караганда, ул. Кунаева, 7, Rixos</p>
+                </div>
+        
+                <div class="contact-item">
+                    <img src="imgs/call-svgrepo-com.svg" alt="Телефон">
+                    <p>+7 (705) 669 05 66</p>
+                </div>
+        
+                <div class="contact-item">
+                    <img src="imgs/email-svgrepo-com.svg" alt="Email">
+                    <p>contact@coachunion.kz</p>
+                </div>
+        
+            </div>
         </div>
-    
-        <div class="contact-info">
-            <h3 class="city">Караганда</h3>
-    
-            <div class="contact-item">
-                <img src="imgs/gps-svgrepo-com.svg" alt="Адрес">
-                <p>Караганда, ул. Кунаева, 7, Rixos</p>
-            </div>
-    
-            <div class="contact-item">
-                <img src="imgs/call-svgrepo-com.svg" alt="Телефон">
-                <p>+7 (705) 669 05 66</p>
-            </div>
-    
-            <div class="contact-item">
-                <img src="imgs/email-svgrepo-com.svg" alt="Email">
-                <p>contact@coachunion.kz</p>
-            </div>
-    
+        
         </div>
-    </div>
-    
-    </div>
 
-</body>
-</html>
+
+
+
+
+        <script src="script.js"></script>
+
+
+
+
+
+    </body>
+    </html>
+
 
