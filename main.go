@@ -24,7 +24,7 @@ const (
 	ReceiverEmail   = ""
 		// Нужно написать почту получателя
 	MongoDBURI      = "mongodb+srv://Aldiyar:Nursultan2005@cluster0.8jzkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-	DatabaseName    = "contactFormDB"
+	DatabaseName    = "DBTOO"
 	CollectionName  = "messages"
 )
 
@@ -74,7 +74,7 @@ func main() {
 		handleFormSubmission(w, r, collection)
 	})
 
-	fmt.Println("🌍 Сервер запущен на http://localhost:8080")
+	fmt.Println(" Сервер запущен на http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
