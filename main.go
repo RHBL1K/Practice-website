@@ -1,85 +1,122 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"net/smtp"
-	"os"
+	"time"
+
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func sendEmail(name, phone, message string) error {
-	from := "aldikoshka@gmail.com"  // Укажите ваш email
-	password := "" // Укажите пароль от почты
 
-	to := []string{"aldiyarkuandyk68@gmail.com"} // Один получатель
-	smtpHost := "smtp.gmail.com"
-	smtpPort := "587"
+const (
+	SMTPServer      = "smtp.gmail.com"
+	SMTPPort        = "587"
+	SenderEmail     = ""
+		// Нужно написать почту отправителя
+	SenderPassword  = ""
+		// Нужно написать пароль от почты отправителя
+	ReceiverEmail   = ""
+		// Нужно написать почту получателя
+	MongoDBURI      = "mongodb+srv://Aldiyar:Nursultan2005@cluster0.8jzkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+	DatabaseName    = "contactFormDB"
+	CollectionName  = "messages"
+)
 
-	auth := smtp.PlainAuth("", from, password, smtpHost)
 
-	body := fmt.Sprintf("Name: %s\nPhone: %s\nMessage: %s", name, phone, message)
+type FormData struct {
+	Name    string `bson:"name"`
+	Phone   string `bson:"phone"`
+	Message string `bson:"message"`
+	Time    string `bson:"time"`
+}
 
-	msg := []byte("Subject: Contact Form Submission\n" +
-		"MIME-Version: 1.0\n" +
-		"Content-Type: text/plain; charset=UTF-8\n\n" +
-		body)
 
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, msg)
+func connectMongoDB() (*mongo.Client, error) {
+	clientOptions := options.Client().ApplyURI(MongoDBURI)
+	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
-}
 
-func formHandler(w http.ResponseWriter, r *http.Request) {
 	
-    w.Header().Set("Access-Control-Allow-Methods", "POST")
-    w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5500")
+	err = client.Ping(context.TODO(), nil)
+	if err != nil {
+		return nil, err
+	}
 
-    if r.Method == http.MethodOptions { // Предварительный CORS-запрос
-        w.WriteHeader(http.StatusOK)
-        return
-    }
-
-    if r.Method != http.MethodPost {
-        http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
-        return
-    }
-
-    err := r.ParseForm()
-    if err != nil {
-        http.Error(w, "Ошибка обработки формы", http.StatusBadRequest)
-        return
-    }
-
-    name := r.FormValue("name")
-    phone := r.FormValue("phone")
-    message := r.FormValue("message")
-
-    if name == "" || phone == "" || message == "" {
-        http.Error(w, "Все поля должны быть заполнены", http.StatusBadRequest)
-        return
-    }
-
-    if err := sendEmail(name, phone, message); err != nil {
-        log.Println("Ошибка отправки email:", err)
-        http.Error(w, "Ошибка отправки email", http.StatusInternalServerError)
-        return
-    }
-
-    w.Write([]byte("Сообщение успешно отправлено!"))
+	fmt.Println(" Успешное подключение к MongoDB")
+	return client, nil
 }
-
 
 func main() {
-	http.HandleFunc("/submit", formHandler)
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "5500"
-	}
 	
-	fmt.Println("Сервер запущен на порту:", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	client, err := connectMongoDB()
+	if err != nil {
+		log.Fatal("Ошибка подключения к MongoDB:", err)
+	}
+	defer client.Disconnect(context.TODO())
+
+
+	collection := client.Database(DatabaseName).Collection(CollectionName)
+
+	// Обслуживание статики
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/", fs)
+
+	// Обработчик формы
+	http.HandleFunc("/submit", func(w http.ResponseWriter, r *http.Request) {
+		handleFormSubmission(w, r, collection)
+	})
+
+	fmt.Println("🌍 Сервер запущен на http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func handleFormSubmission(w http.ResponseWriter, r *http.Request, collection *mongo.Collection) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Метод запрещен", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Получаем данные из формы
+	name := r.FormValue("name")
+	phone := r.FormValue("phone")
+	message := r.FormValue("message")
+	currentTime := time.Now().Format("2006-01-02 15:04:05")
+
+	// Сохраняем в MongoDB
+	formData := FormData{
+		Name:    name,
+		Phone:   phone,
+		Message: message,
+		Time:    currentTime,
+	}
+
+	_, err := collection.InsertOne(context.TODO(), formData)
+	if err != nil {
+		log.Println("Ошибка сохранения в MongoDB:", err)
+		http.Error(w, "Ошибка при сохранении данных", http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Println(" Данные успешно сохранены в MongoDB")
+
+	// Отправляем письмо
+	emailBody := fmt.Sprintf("Имя: %s\nТелефон: %s\nСообщение:\n%s\nВремя: %s", name, phone, message, currentTime)
+	auth := smtp.PlainAuth("", SenderEmail, SenderPassword, SMTPServer)
+
+	err = smtp.SendMail(SMTPServer+":"+SMTPPort, auth, SenderEmail, []string{ReceiverEmail}, []byte("Subject: Новое сообщение с сайта\n\n"+emailBody))
+	if err != nil {
+		log.Println("Ошибка отправки почты:", err)
+		http.Error(w, "Ошибка при отправке сообщения", http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintln(w, "Сообщение успешно отправлено и сохранено в базе!")
 }

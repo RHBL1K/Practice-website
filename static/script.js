@@ -104,7 +104,6 @@ function closePopup() {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector(".contact-form");
 
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const formData = new FormData(form);
 
-        fetch("http://localhost:8080/submit", {
+        fetch("/submit", {
             method: "POST",
             body: formData
         })
@@ -128,3 +127,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
