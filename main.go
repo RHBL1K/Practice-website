@@ -23,7 +23,7 @@ const (
 		// Нужно написать пароль от почты отправителя
 	ReceiverEmail   = ""
 		// Нужно написать почту получателя
-	MongoDBURI      = "mongodb+srv://Aldiyar:Nursultan2005@cluster0.8jzkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+	MongoDBURI      = "mongodb+srv://Aldiyar:Nursultan2005@cluster0.8jzkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&tls=true"
 	DatabaseName    = "DBTOO"
 	CollectionName  = "messages"
 )
